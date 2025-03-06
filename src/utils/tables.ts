@@ -1,6 +1,6 @@
-import { Docpak, Dossiers, Queries, TreeArchive } from "../types.ts";
+import { instance, ged } from "../main.ts";
 
-import { instance, ged } from "../config.json" assert { type: "json" };
+import { Docpak, Dossiers, Queries, TreeArchive } from "../types.ts";
 
 export async function obtenirClasseur(): Promise<Queries> {
   return await (await fetch(
@@ -59,7 +59,7 @@ export async function obtenirClient(name: string): Promise<Dossiers> {
   })).json();
 }
 
-export async function obtenirTruc(trucId: number): Promise<Docpak> {
+export async function obtenirDocuments(trucId: number): Promise<Docpak> {
   return await (await fetch(
     ged +
       "/data/service.php?service=docpak/loadalllastrevision&fsfileinfo=1&docpakrsid=" +
