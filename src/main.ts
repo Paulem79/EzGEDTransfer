@@ -4,10 +4,13 @@ import {
   obtenirClient,
   telechargePdf,
   obtenirSousDossier,
-  obtenirTruc,
+  obtenirDocuments,
 } from "./utils/export.ts";
 
 export const base = "EzGED";
+
+import config from "../config.json" with { type: "json" };
+export const { instance, ged, ip } = config;
 
 const views = await obtenirClasseur();
 for (const view of views.rows[0].rows) {
@@ -32,7 +35,7 @@ for (const view of views.rows[0].rows) {
         const dossiers = await obtenirClient(proprio.LVL1);
         for (const dossier of dossiers.rows) {
           // Adresse etc.
-          const trucDocs = await obtenirTruc(dossier.DOSSIERS_ID);
+          const documents = await obtenirDocuments(dossier.DOSSIERS_ID);
           
           createFolder([view.QRYSET_DESC, row.QRY_DESC, proprio.LVL1], dossier.DOSSIERS_adressbien);
           createFolder([view.QRYSET_DESC, row.QRY_DESC, proprio.LVL1, dossier.DOSSIERS_adressbien], dossier.DOSSIERS_typebien);
@@ -45,7 +48,7 @@ for (const view of views.rows[0].rows) {
             if(dossier.DOSSIERS_typedocloc) {
               createFolder([view.QRYSET_DESC, row.QRY_DESC, proprio.LVL1, dossier.DOSSIERS_adressbien, dossier.DOSSIERS_typebien, "LOCATAIRE", dossier.DOSSIERS_nomloc], dossier.DOSSIERS_typedocloc);
               
-              for (const doc of trucDocs.rows) {
+              for (const doc of documents.rows) {
                 const docName = doc.namefileorigin.replace("." + doc.extension, "");
                 const fileName = docName + "-" + dossier.DOSSIERS_dateinteg + "." + doc.extension;
                 telechargePdf([view.QRYSET_DESC, row.QRY_DESC, proprio.LVL1, dossier.DOSSIERS_adressbien, dossier.DOSSIERS_typebien, "LOCATAIRE", dossier.DOSSIERS_nomloc, dossier.DOSSIERS_typedocloc], doc.fsfileid, doc.ripe, fileName);
@@ -54,7 +57,7 @@ for (const view of views.rows[0].rows) {
           } else {
             // Sans locataire
             
-            for (const doc of trucDocs.rows) {
+            for (const doc of documents.rows) {
               const docName = doc.namefileorigin.replace("." + doc.extension, "");
               const fileName = docName + "-" + dossier.DOSSIERS_dateinteg + "." + doc.extension;
               telechargePdf([view.QRYSET_DESC, row.QRY_DESC, proprio.LVL1, dossier.DOSSIERS_adressbien, dossier.DOSSIERS_typebien, docName], doc.fsfileid, doc.ripe, fileName);

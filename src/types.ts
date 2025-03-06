@@ -1,4 +1,4 @@
-export class Queries {
+export interface Queries {
     errorcode: number;
     errormsg: string;
     rows: Array<{
@@ -30,26 +30,26 @@ export class Queries {
     count: number;
 }
 
-export class TreeNode {
+export interface TreeNode {
     LVL: number;
     TYPE: string;
     FFQN: string;
     type: string;
 }
 
-export class TreeNodeDesc {
+export interface TreeNodeDesc {
     LVL1: string;
     type: string;
 }
 
-export class TreeArchive {
+export interface TreeArchive {
     errorcode: number;
     errormsg: string;
     rows: Array<TreeNode | TreeNodeDesc>;
     count: number;
 }
 
-export class Dossiers {
+export interface Dossiers {
     errorcode: number;
     errormsg: string;
     rows: Array<{
@@ -69,7 +69,7 @@ export class Dossiers {
     count: number;
 }
 
-export class Docpak {
+export interface Docpak {
     errorcode: number;
     count: number;
     rows: Array<{

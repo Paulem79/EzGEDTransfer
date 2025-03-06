@@ -1,10 +1,8 @@
 import fs from 'node:fs';
-import axios from 'axios';
+import axios from 'npm:axios';
 import { Buffer } from "node:buffer";
 
-import { base } from "../main.ts";
-
-import { instance, ged, ip } from "../config.json" assert { type: "json" };
+import { base, instance, ged, ip } from "../main.ts";
 
 const __dirname = import.meta.dirname;
 
@@ -21,7 +19,7 @@ export async function telechargePdf(
     const pdfURL = ged + "/data/showdocs.php?fsfileid=" + fsfileid +
         "&fsfileripe=" + fsfileripe;
 
-    let response = await axios.get(pdfURL, {
+    const response = await axios.get(pdfURL, {
         responseType: "arraybuffer",
         headers: {
             "accept":
@@ -40,7 +38,7 @@ export async function telechargePdf(
         },
     });
 
-    let pdfBuffer = Buffer.from(response.data);
+    const pdfBuffer = Buffer.from(response.data);
 
     if (!fs.existsSync(parent)) {
         fs.mkdirSync(parent, { recursive: true });

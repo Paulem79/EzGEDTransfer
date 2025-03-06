@@ -2,7 +2,7 @@ import fs from "node:fs";
 
 import { base } from "../main.ts";
 
-export async function createFolder(parents: string[], name: string) {
+export function createFolder(parents: string[], name: string) {
   const parent = parents
     ? parents.map((str) => str.replace(/\s+$/, "")).join("/") + "/"
     : "";
