@@ -7,6 +7,8 @@ import {
   obtenirDocuments,
 } from "./utils/export.ts";
 
+export const __dirname = import.meta.dirname;
+
 export const base = "EzGED";
 
 import config from "../config.json" with { type: "json" };

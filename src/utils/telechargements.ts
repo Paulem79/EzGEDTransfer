@@ -2,9 +2,7 @@ import fs from 'node:fs';
 import axios from 'npm:axios';
 import { Buffer } from "node:buffer";
 
-import { base, instance, ged, ip } from "../main.ts";
-
-const __dirname = import.meta.dirname;
+import { base, instance, ged, ip, __dirname } from "../main.ts";
 
 export async function telechargePdf(
     parents: string[],

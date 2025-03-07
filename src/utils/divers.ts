@@ -1,6 +1,6 @@
 import fs from "node:fs";
 
-import { base } from "../main.ts";
+import { base, __dirname } from "../main.ts";
 
 export function createFolder(parents: string[], name: string) {
   const parent = parents
