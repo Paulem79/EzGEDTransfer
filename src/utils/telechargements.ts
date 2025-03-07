@@ -63,12 +63,19 @@ function getRevisioned(parent: string, name: string) {
 
     let revision = -1;
 
-    let newPath = parent + name + "-" + revision + "." + extension;
+    let newPath = computePath(parent, name, revision, extension);
 
     do {
         revision++;
-        newPath = parent + name + "-" + revision + "." + extension;
+        newPath = computePath(parent, name, revision, extension);
     } while (fs.existsSync(newPath));
 
     return newPath;
+}
+
+function computePath(parent: string, name: string, revision: number, extension: string) {
+    if(revision == 0) {
+        return parent + name + "." + extension;
+    }
+    return parent + name + "-" + revision + "." + extension;
 }
