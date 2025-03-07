@@ -15,6 +15,8 @@ import config from "../config.json" with { type: "json" };
 export const { instance, ged, ip } = config;
 
 const views = await obtenirClasseur();
+
+console.log(views)
 for (const view of views.rows[0].rows) {
   // Dossiers clients
   createFolder([], view.QRYSET_DESC);

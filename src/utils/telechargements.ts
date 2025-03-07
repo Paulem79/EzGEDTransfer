@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import axios from 'npm:axios';
+import axios from 'axios';
 import { Buffer } from "node:buffer";
 
 import { base, instance, ged, ip, __dirname } from "../main.ts";
@@ -10,9 +10,9 @@ export async function telechargePdf(
     fsfileripe: string,
     name: string,
 ) {
-    const parent = __dirname + "/" + base + "/" + parents.map((str) =>
+    const parent = __dirname + "\\" + base + "\\" + parents.map((str) =>
         str.replace(/\s+$/, "")
-    ).join("/") + "/";
+    ).join("\\") + "\\";
 
     const pdfURL = ged + "/data/showdocs.php?fsfileid=" + fsfileid +
         "&fsfileripe=" + fsfileripe;
@@ -42,14 +42,9 @@ export async function telechargePdf(
         fs.mkdirSync(parent, { recursive: true });
     }
 
-    fs.writeFile(
-        getRevisioned(parent, name),
-        new Uint8Array(pdfBuffer),
-        (err) => {
-            if (err) {
-                console.error(err);
-            }
-        },
+    fs.writeFileSync(
+        getRevisioned(parent, name.replaceAll(":", "-")),
+        new Uint8Array(pdfBuffer)
     );
 }
 
@@ -72,8 +67,12 @@ function getRevisioned(parent: string, name: string) {
 }
 
 function computePath(parent: string, name: string, revision: number, extension: string) {
+    let computedPath: string;
     if(revision == 0) {
-        return parent + name + "." + extension;
+        computedPath = parent + name + "." + extension;
+    } else {
+        computedPath = parent + name + "-" + revision + "." + extension;
     }
-    return parent + name + "-" + revision + "." + extension;
+
+    return computedPath;
 }
