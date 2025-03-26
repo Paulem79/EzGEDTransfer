@@ -17,6 +17,11 @@ export const { instance, ged, ip } = config;
 const views = await obtenirClasseur();
 
 console.log(views)
+
+if(views.errorcode !== 0) {
+  throw new Error(views.errormsg);
+}
+
 for (const view of views.rows[0].rows) {
   // Dossiers clients
   createFolder([], view.QRYSET_DESC);
